@@ -258,41 +258,38 @@ body {
   text-align: center;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   body {
-    padding: 16px;
-    align-items: stretch; /* Biar flex pas di layar kecil */
-    background-color: #1a1a24; /* Pastikan konsisten */
+    padding: 10px;
   }
 
-  .container,
-  .dashboard-view {
+  .container {
+    /* Kunci utamanya di sini: ubah susunan kiri-kanan jadi atas-bawah */
+    flex-direction: column !important;
+    height: auto !important;
     width: 100% !important;
     max-width: 100% !important;
-    min-height: auto !important;
-    height: auto !important;
-    padding: 32px 20px !important;
-    border-radius: 16px !important;
-    box-sizing: border-box;
+    padding: 20px !important;
   }
 
-  /* Cegah auto-zoom di iOS Safari saat fokus input */
+  /* Memaksa bagian kiri (Logo) dan kanan (Form) memenuhi lebar layar */
+  .container > div {
+    width: 100% !important;
+    min-height: auto !important;
+  }
+
+  /* (Opsional) Beri sedikit jarak antara logo dan form saat di HP */
+  .container > div:first-child {
+    margin-bottom: 20px;
+    text-align: center; /* Biar logo TRANSAKU ke tengah di HP */
+  }
+
+  /* Fix tambahan untuk input & tombol */
   input {
     font-size: 16px !important;
-    padding: 14px 16px !important;
   }
-
   .submit-btn,
   #btn-google {
-    min-height: 48px; /* Standard touch target jempol */
-    font-size: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 48px;
   }
-
-  h1,
-  h2 {
-    font-size: 1.5rem !important;
-  }
-} 
+}
