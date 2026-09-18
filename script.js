@@ -1,171 +1,101 @@
-// --- KONFIGURASI SUPABASE ---
-const { createClient } = supabase;
+// ==========================================
+// 1. INISIALISASI SUPABASE
+// ==========================================
+const SUPABASE_URL = 'https://dtcbhkjdnriyctniucdq.supabase.co'; // Ref project kamu
+const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY_KAMU'; // Masukkan anon/public key dari project settings -> API
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const supabaseUrl = 'https://dtcbhkjdnriyctniucdq.supabase.co';
-const supabaseKey = 'sb_publishable_vWn46jJaAL3kUB-0039gPA_z2WlSFN5';
-const _supabase = createClient(supabaseUrl, supabaseKey);
-
-// --- LOGIKA UI (TOGGLE LOGIN/SIGNUP) ---
-const toggleSignup = document.getElementById('toggle-signup');
-const toggleSignin = document.getElementById('toggle-signin');
-const formTitle = document.getElementById('form-title');
-const formSubtitle = document.getElementById('form-subtitle');
-const nameGroup = document.getElementById('name-group');
-const termsGroup = document.getElementById('terms-group');
-const submitBtn = document.getElementById('submit-btn');
-const linkLogin = document.getElementById('link-login');
-
-let isLoginMode = false;
-
-function switchToLogin() {
-  isLoginMode = true;
-  toggleSignin.classList.add('active');
-  toggleSignup.classList.remove('active');
-
-  formTitle.innerText = 'Log in to your account';
-  formSubtitle.innerHTML = 'Don\'t have an account? <a href="#" onclick="switchToSignup()">Sign up</a>';
-
-  nameGroup.style.display = 'none';
-  termsGroup.style.display = 'none';
-  submitBtn.innerText = 'Log in';
-  document.querySelector('.divider span').innerText = 'Or log in with';
-}
-
-function switchToSignup() {
-  isLoginMode = false;
-  toggleSignup.classList.add('active');
-  toggleSignin.classList.remove('active');
-
-  formTitle.innerText = 'Create an account';
-  formSubtitle.innerHTML = 'Already have an account? <a href="#" onclick="switchToLogin()">Log in</a>';
-
-  nameGroup.style.display = 'flex';
-  termsGroup.style.display = 'flex';
-  submitBtn.innerText = 'Create account';
-  document.querySelector('.divider span').innerText = 'Or register with';
-}
-
-toggleSignin.addEventListener('click', switchToLogin);
-toggleSignup.addEventListener('click', switchToSignup);
-linkLogin.addEventListener('click', switchToLogin);
-
-// Toggle visibility password
-document.getElementById('toggle-pwd').addEventListener('click', function() {
-  const pwdInput = document.getElementById('password');
-  if (pwdInput.type === 'password') {
-    pwdInput.type = 'text';
-    this.classList.remove('fa-eye-slash');
-    this.classList.add('fa-eye');
-  } else {
-    pwdInput.type = 'password';
-    this.classList.remove('fa-eye');
-    this.classList.add('fa-eye-slash');
-  }
-});
-
-// --- LOGIKA OTENTIKASI SUPABASE ---
-
-// 1. Login menggunakan Google
-document.getElementById('btn-google').addEventListener('click', async () => {
-  const { data, error } = await _supabase.auth.signInWithOAuth({
-    provider: 'google',
-  });
-
-  if (error) {
-    alert("Gagal login dengan Google: " + error.message);
-  }
-});
-
-// 2. Submit Form (Email & Password)
-document.getElementById('auth-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  if (isLoginMode) {
-    // Proses Log In
-    const { data, error } = await _supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
-
-    if (error) alert("Error Login: " + error.message);
-    else alert("Berhasil Login!");
-
-  } else {
-    // Proses Sign Up
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-
-    const { data, error } = await _supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          first_name: firstName,
-          last_name: lastName
-        }
-      }
-    });
-
-    if (error) alert("Error Sign Up: " + error.message);
-    else alert("Pendaftaran berhasil! Cek email kamu.");
-  }
-});
-
-const containerEl = document.querySelector('.container');
-// Buat element dashboard di DOM atau buat fungsi toggle view:
+// ==========================================
+// 2. FUNGSI UI DASHBOARD / STATE LOGIN
+// ==========================================
 function renderDashboard(user) {
-  // Sembunyikan form auth, tampilkan dashboard
-  document.querySelector('.container').style.display = 'none';
+  const container = document.querySelector('.container');
+  if (container) container.style.display = 'none';
 
-  // Cek apakah elemen dashboard sudah ada, kalau belum buat dinamis / tampilkan
   let dash = document.getElementById('dashboard-view');
   if (!dash) {
     dash = document.createElement('div');
     dash.id = 'dashboard-view';
     dash.className = 'dashboard-view';
     dash.innerHTML = `
-      <div class="dashboard-card">
+      <div class="dashboard-card" style="text-align: center; color: #fff;">
         <h2 style="margin-bottom: 10px;">Login Berhasil! 🎉</h2>
         <p style="color: #00b4d8; margin-bottom: 15px;">Anda masuk sebagai:</p>
-        <p id="user-email" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 25px;"></p>
-        <button id="btn-logout" class="submit-btn" style="background-color: #ef4444;">Log out</button>
+        <p id="user-email" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 25px; word-break: break-all;"></p>
+        <button id="btn-logout" class="submit-btn" style="background-color: #ef4444; width: 100%; border: none; padding: 12px; border-radius: 8px; color: #fff; font-weight: 600; cursor: pointer;">Log out</button>
       </div>
     `;
     document.body.appendChild(dash);
   }
 
+  // Styling dasar kalau container dashboard belum tercover CSS luar
   dash.style.display = 'flex';
-  dash.querySelector('#user-email').textContent = user.email || user.user_metadata?.full_name;
+  dash.style.justifyContent = 'center';
+  dash.style.alignItems = 'center';
+  dash.style.minHeight = '100vh';
+  dash.style.backgroundColor = 'inherit';
+
+  const userEmailEl = dash.querySelector('#user-email');
+  if (userEmailEl) {
+    userEmailEl.textContent = user.email || user.user_metadata?.full_name || 'User Transaku';
+  }
 
   // Handler Logout
-  dash.querySelector('#btn-logout').onclick = async () => {
-    await _supabase.auth.signOut();
-    dash.style.display = 'none';
-    document.querySelector('.container').style.display = 'flex';
-  };
+  const btnLogout = dash.querySelector('#btn-logout');
+  if (btnLogout) {
+    btnLogout.onclick = async () => {
+      await _supabase.auth.signOut();
+      hideDashboard();
+    };
+  }
 }
 
-// Cek session saat halaman dimuat
+function hideDashboard() {
+  const dash = document.getElementById('dashboard-view');
+  if (dash) dash.style.display = 'none';
+  const container = document.querySelector('.container');
+  if (container) container.style.display = 'flex';
+}
+
+// ==========================================
+// 3. CEK SESI & AUTH STATE CHANGE
+// ==========================================
 async function checkUserSession() {
   const { data: { session } } = await _supabase.auth.getSession();
   if (session) {
     renderDashboard(session.user);
+  } else {
+    hideDashboard();
   }
 }
 
-// Panggil saat load
-checkUserSession();
+window.addEventListener('DOMContentLoaded', () => {
+  checkUserSession();
+});
 
-// Tangani perubahan Auth (termasuk balik dari Google OAuth redirect)
 _supabase.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_IN' && session) {
     renderDashboard(session.user);
   } else if (event === 'SIGNED_OUT') {
-    const dash = document.getElementById('dashboard-view');
-    if (dash) dash.style.display = 'none';
-    document.querySelector('.container').style.display = 'flex';
+    hideDashboard();
   }
 });
+
+// ==========================================
+// 4. EVENT LISTENER GOOGLE OAUTH
+// ==========================================
+const btnGoogle = document.getElementById('btn-google');
+if (btnGoogle) {
+  btnGoogle.addEventListener('click', async () => {
+    const { error } = await _supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin + window.location.pathname
+      }
+    });
+    if (error) {
+      console.error('Google OAuth Error:', error.message);
+      alert('Gagal login dengan Google: ' + error.message);
+    }
+  });
+}
