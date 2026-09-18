@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 body {
@@ -179,7 +179,8 @@ body {
   position: relative;
 }
 
-.divider::before, .divider::after {
+.divider::before,
+.divider::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -188,8 +189,12 @@ body {
   background-color: #3d3d52;
 }
 
-.divider::before { left: 0; }
-.divider::after { right: 0; }
+.divider::before {
+  left: 0;
+}
+.divider::after {
+  right: 0;
+}
 
 .divider span {
   color: #7b7b8f;
@@ -252,3 +257,42 @@ body {
   max-width: 500px;
   text-align: center;
 }
+
+@media (max-width: 640px) {
+  body {
+    padding: 16px;
+    align-items: stretch; /* Biar flex pas di layar kecil */
+    background-color: #1a1a24; /* Pastikan konsisten */
+  }
+
+  .container,
+  .dashboard-view {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    padding: 32px 20px !important;
+    border-radius: 16px !important;
+    box-sizing: border-box;
+  }
+
+  /* Cegah auto-zoom di iOS Safari saat fokus input */
+  input {
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+  }
+
+  .submit-btn,
+  #btn-google {
+    min-height: 48px; /* Standard touch target jempol */
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  h1,
+  h2 {
+    font-size: 1.5rem !important;
+  }
+} 
