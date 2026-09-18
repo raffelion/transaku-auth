@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaku - Digital Infrastructure</title>
+
+    <!-- Font dan Icon -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- CSS Internal -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Supabase JS Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Kolom Kiri: Branding Teks Asli -->
+      <div class="brand-section">
+        <div class="brand-content">
+          <h1 class="logo">TRANSAKU</h1>
+          <p class="tagline">D I G I T A L</p>
+          <p class="tagline">I N F R A S T R U C T U R</p>
+          <p class="sub-tagline">
+            M O R E &nbsp; T H A N &nbsp; P A Y M E N T S
+          </p>
+        </div>
+        <!-- Tambahkan di dalam .container atau setelah .container -->
+        <div id="dashboard-view" class="dashboard-view" style="display: none">
+          <div class="dashboard-card">
+            <h2>Selamat datang, <span id="user-name">User</span>!</h2>
+            <p id="user-email" style="color: #7b7b8f; margin-bottom: 20px"></p>
+            <div
+              style="
+                background: #313142;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                font-size: 0.85rem;
+                word-break: break-all;
+              "
+            >
+              <strong>UID:</strong> <span id="user-uid"></span>
+            </div>
+            <button
+              id="btn-logout"
+              class="submit-btn"
+              style="background-color: #ef4444"
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kolom Kanan: Form Auth -->
+      <div class="form-section">
+        <!-- Toggle Sign In / Sign Up -->
+        <div class="auth-toggle">
+          <button id="toggle-signup" class="active">Create an account</button>
+          <button id="toggle-signin">Log in</button>
+        </div>
+
+        <div class="form-wrapper">
+          <h2 id="form-title">Create an account</h2>
+          <p class="subtitle" id="form-subtitle">
+            Already have an account? <a href="#" id="link-login">Log in</a>
+          </p>
+
+          <!-- Form Element -->
+          <form id="auth-form">
+            <div class="input-group name-group" id="name-group">
+              <input type="text" id="firstName" placeholder="First name" />
+              <input type="text" id="lastName" placeholder="Last name" />
+            </div>
+
+            <div class="input-group">
+              <input type="email" id="email" placeholder="Email" required />
+            </div>
+
+            <div class="input-group password-group">
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+              />
+              <i
+                class="fa-regular fa-eye-slash toggle-password"
+                id="toggle-pwd"
+              ></i>
+            </div>
+
+            <div class="terms" id="terms-group">
+              <input type="checkbox" id="terms" required />
+              <label for="terms">I agree to the Terms & Conditions</label>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">
+              Create account
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>Or register with</span>
+          </div>
+
+          <!-- Social Logins -->
+          <div class="social-login">
+            <button type="button" class="social-btn" id="btn-google">
+              <img src="Asset/google.png" alt="Google" />
+              <span>Google</span>
+            </button>
+            <button type="button" class="social-btn" id="btn-apple">
+              <i
+                class="fa-brands fa-apple"
+                style="font-size: 1.1rem; color: #fff"
+              ></i>
+              <span>Apple</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Javascript File -->
+    <script src="script.js"></script>
+  </body>
+</html>

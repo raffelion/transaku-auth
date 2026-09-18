@@ -1,0 +1,254 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #1a1a24;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 1000px;
+  height: 600px;
+  background-color: #262635;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Kolom Kiri: Branding Transaku */
+.brand-section {
+  flex: 1;
+  background: linear-gradient(180deg, #181924 0%, #1c1d29 100%);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  overflow: hidden;
+}
+
+.brand-content {
+  text-align: center;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #0f3d8a 0%, #00b4d8 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-size: 0.8rem;
+  color: #a0a0b0;
+  letter-spacing: 6px;
+  margin-bottom: 5px;
+}
+
+.sub-tagline {
+  font-size: 0.7rem;
+  color: #00b4d8;
+  letter-spacing: 4px;
+}
+
+/* Kolom Kanan: Form Auth (dirapatkan agar fit vertikal) */
+.form-section {
+  flex: 1.2;
+  padding: 35px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-toggle {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.auth-toggle button {
+  background: none;
+  border: none;
+  color: #7b7b8f;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.auth-toggle button.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.form-wrapper h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  color: #7b7b8f;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.subtitle a {
+  color: #8c72ff;
+  text-decoration: none;
+}
+
+.input-group {
+  margin-bottom: 11px;
+  position: relative;
+}
+
+.name-group {
+  display: flex;
+  gap: 12px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 14px;
+  background-color: #313142;
+  border: 1px solid #3d3d52;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #8c72ff;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7b7b8f;
+  cursor: pointer;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+  color: #7b7b8f;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 11px;
+  background-color: #8c72ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #7a60eb;
+}
+
+.divider {
+  text-align: center;
+  margin: 15px 0;
+  position: relative;
+}
+
+.divider::before, .divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 32%;
+  height: 1px;
+  background-color: #3d3d52;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.divider span {
+  color: #7b7b8f;
+  font-size: 0.8rem;
+  background-color: #262635;
+  padding: 0 10px;
+}
+
+.social-login {
+  display: flex;
+  gap: 12px;
+}
+
+.social-btn {
+  flex: 1;
+  padding: 9px;
+  background-color: transparent;
+  border: 1px solid #3d3d52;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.social-btn:hover {
+  background-color: #313142;
+}
+
+.social-btn img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  display: block;
+}
+
+.social-btn i {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.dashboard-view {
+  width: 1000px;
+  height: 600px;
+  background-color: #262635;
+  border-radius: 20px;
+  padding: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.dashboard-card {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+}
